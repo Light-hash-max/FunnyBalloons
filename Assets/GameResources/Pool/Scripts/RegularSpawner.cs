@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections;
+    using System.Collections.Generic;
     using UnityEngine;
     using Zenject;
     using Random = UnityEngine.Random;
@@ -25,7 +26,7 @@
         protected float minTime = 0.1f;
 
         [SerializeField]
-        protected GameObject prefab = default;
+        protected List<GameObject> prefabs = default;
         [SerializeField]
         protected Transform parent = default;
 
@@ -65,7 +66,7 @@
 
         protected virtual void Spawn()
         {
-            SpawnedObject = poolService.Spawn(prefab, parent);
+            SpawnedObject = poolService.Spawn(prefabs[Random.Range(0,prefabs.Count)], parent);
             SpawnedObject.transform.localPosition = Vector3.zero;
 
             if (SpawnedObject.TryGetComponent(out toPoolSetter))
